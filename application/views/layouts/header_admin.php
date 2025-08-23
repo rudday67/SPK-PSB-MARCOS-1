@@ -22,6 +22,7 @@ if($this->session->status !== ('Logged')) {
 
   <!-- Custom styles -->
   <link href="<?= base_url('assets/')?>css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="<?= base_url('assets/css/sb-admin-2.css'); ?>" rel="stylesheet">
   <link href="<?= base_url('assets/')?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="<?= base_url('assets/')?>img/BM.png" type="image/x-icon">
 </head>
@@ -176,7 +177,7 @@ if($this->session->status !== ('Logged')) {
                   Profile
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="login" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
