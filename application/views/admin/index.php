@@ -30,10 +30,10 @@
 		</div>
 
 		<div class="col-lg-4 col-md-6 mb-4">
-			<a href="<?= base_url('Sub_kriteria'); ?>" class="menu-card bg-success-soft">
+			<a href="<?= base_url('prestasi'); ?>" class="menu-card bg-success-soft">
 				<i class="fas fa-cubes fa-3x text-success mb-3"></i>
-				<h5 class="text-dark fw-bold">Data Sub Kriteria</h5>
-				<p class="small text-muted mb-0">Kelola sub kriteria penilaian</p>
+				<h5 class="text-dark fw-bold">Data Prestasi</h5>
+				<p class="small text-muted mb-0">Kelola Data Prestasi</p>
 			</a>
 		</div>
 

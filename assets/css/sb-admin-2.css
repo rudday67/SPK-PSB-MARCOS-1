@@ -11246,3 +11246,11 @@ body.sidebar-toggled footer.sticky-footer {
 .bg-warning-soft { background-color: rgba(246, 194, 62, 0.05); }
 .bg-danger-soft { background-color: rgba(231, 74, 59, 0.05); }
 .bg-secondary-soft { background-color: rgba(134, 142, 150, 0.05); }
+
+ .card-hover {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+ .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  }
