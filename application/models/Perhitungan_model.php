@@ -67,23 +67,20 @@ class Perhitungan_model extends CI_Model {
         }
         
         // 4. Hitung S ideal (Sai) dan S anti-ideal (Saai)
-        // Langkah ini belum ada di kodemu dan sangat penting.
         $matriks_terbobot_ideal = [];
         $matriks_terbobot_anti_ideal = [];
         foreach ($kriterias as $kri) {
             $pembagi_ideal = $ideal[$kri->id_kriteria];
             $pembagi_anti_ideal = $anti_ideal[$kri->id_kriteria];
             
-            // Hitung Normalisasi untuk Solusi Ideal (AI)
             $normalisasi_ideal = 0;
             if ($pembagi_ideal != 0) {
                 $normalisasi_ideal = ($kri->jenis == 'Benefit') ? ($ideal[$kri->id_kriteria] / $pembagi_ideal) : ($pembagi_ideal / $ideal[$kri->id_kriteria]);
             }
             $matriks_terbobot_ideal[$kri->id_kriteria] = $normalisasi_ideal * $kri->bobot;
 
-            // Hitung Normalisasi untuk Solusi Anti-Ideal (AAI)
             $normalisasi_anti_ideal = 0;
-            if ($pembagi_ideal != 0) {
+            if ($pembagi_ideal != 0 && $anti_ideal[$kri->id_kriteria] !=0) {
                  $normalisasi_anti_ideal = ($kri->jenis == 'Benefit') ? ($anti_ideal[$kri->id_kriteria] / $pembagi_ideal) : ($pembagi_ideal / $anti_ideal[$kri->id_kriteria]);
             }
             $matriks_terbobot_anti_ideal[$kri->id_kriteria] = $normalisasi_anti_ideal * $kri->bobot;
@@ -102,7 +99,6 @@ class Perhitungan_model extends CI_Model {
         $k_minus = [];
         foreach($alternatifs as $alt) {
             $id_alt = $alt->id_alternatif;
-            // Ini adalah rumus K+ dan K- yang benar
             $k_plus[$id_alt] = ($s_ideal != 0) ? ($s_values[$id_alt] / $s_ideal) : 0;
             $k_minus[$id_alt] = ($s_anti_ideal != 0) ? ($s_values[$id_alt] / $s_anti_ideal) : 0;
         }
@@ -113,25 +109,25 @@ class Perhitungan_model extends CI_Model {
             $kp = $k_plus[$id_alt];
             $km = $k_minus[$id_alt];
             
-            // Rumus Fungsi Utilitas f(Ki)
             $penyebut_f_ki = $kp + $km;
-            $f_kp = ($penyebut_f_ki != 0) ? $km / $penyebut_f_ki : 0; // f(K+)
-            $f_km = ($penyebut_f_ki != 0) ? $kp / $penyebut_f_ki : 0; // f(K-)
+            $f_kp = ($penyebut_f_ki != 0) ? $km / $penyebut_f_ki : 0;
+            $f_km = ($penyebut_f_ki != 0) ? $kp / $penyebut_f_ki : 0;
 
-            // Rumus Nilai Akhir Ki
-            $pembilang_ki = $kp + $km;
-            $penyebut_ki = 1 + ((1 - $f_kp) / $f_kp) + ((1 - $f_km) / $f_km);
-            
-            $ki = 0; // Nilai default jika terjadi pembagian dengan nol
-            if($penyebut_ki != 0 && $f_kp > 0 && $f_km > 0) {
-                $ki = $pembilang_ki / $penyebut_ki;
+            $ki = 0; // Nilai default
+            if($f_kp > 0 && $f_km > 0) {
+                $pembilang_ki = $kp + $km;
+                $penyebut_ki = 1 + ((1 - $f_kp) / $f_kp) + ((1 - $f_km) / $f_km);
+                
+                if($penyebut_ki != 0) {
+                    $ki = $pembilang_ki / $penyebut_ki;
+                }
             }
             
             $this->db->insert('hasil', ['id_alternatif' => $id_alt, 'nilai' => $ki]);
         }
         
         // 7. Ambil hasil akhir yang sudah diurutkan
-        $this->db->select('alternatif.nama_alternatif, hasil.nilai');
+        $this->db->select('alternatif.nama, hasil.nilai');
         $this->db->from('hasil');
         $this->db->join('alternatif', 'hasil.id_alternatif = alternatif.id_alternatif');
         $this->db->order_by('hasil.nilai', 'DESC');
