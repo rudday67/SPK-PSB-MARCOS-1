@@ -1,4 +1,4 @@
-<?php $this->load->view('layouts/header_admin'); ?>
+<!-- <?php $this->load->view('layouts/header_admin'); ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
@@ -166,4 +166,4 @@
 </div>
 <?php endforeach; ?>
 
-<?php $this->load->view('layouts/footer_admin'); ?>
+<?php $this->load->view('layouts/footer_admin'); ?> -->
