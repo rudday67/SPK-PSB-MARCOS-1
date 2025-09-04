@@ -29,18 +29,27 @@ class Penilaian extends CI_Controller {
     {
         if ($this->session->userdata('id_user_level') != "1") { redirect('Login'); }
         
-        $alternatif_list = $this->Alternatif_model->tampil();
-        $data_alternatif_prestasi = [];
-        foreach ($alternatif_list as $siswa) {
+        // 1. Ambil daftar siswa yang belum dinilai
+        $alternatifs_belum_dinilai = $this->Alternatif_model->get_alternatif_belum_dinilai();
+        
+        // 2. Siapkan array baru untuk menampung data siswa beserta total poin prestasinya
+        $alternatifs_with_prestasi = [];
+        
+        // 3. Looping untuk setiap siswa, hitung total poinnya, dan masukkan ke array baru
+        foreach ($alternatifs_belum_dinilai as $siswa) {
             $total_poin = $this->Prestasi_model->get_total_poin($siswa->id_alternatif);
             $nilai_prestasi = ($total_poin == 0) ? 0.1 : $total_poin;
-            $data_alternatif_prestasi[] = ['id_alternatif' => $siswa->id_alternatif, 'nama' => $siswa->nama, 'nilai_prestasi' => $nilai_prestasi];
+            
+            // Tambahkan properti baru 'poin_prestasi' ke data siswa
+            $siswa->poin_prestasi = $nilai_prestasi;
+            $alternatifs_with_prestasi[] = $siswa;
         }
 
         $data = [
             'page' => "Penilaian",
-            'alternatif_prestasi' => $data_alternatif_prestasi,
-            'url_action' => base_url('Penilaian/simpan') // URL untuk menyimpan data BARU
+            'alternatifs' => $alternatifs_with_prestasi, // Gunakan array baru yang sudah ada poin prestasinya
+            'kriterias' => $this->Kriteria_model->tampil(),
+            'url_action' => base_url('Penilaian/simpan')
         ];
         $this->load->view('penilaian/form_penilaian', $data);
     }
@@ -50,19 +59,19 @@ class Penilaian extends CI_Controller {
     {
         if ($this->session->userdata('id_user_level') != "1") { redirect('Login'); }
 
-        $data_penilaian = $this->Penilaian_model->get_penilaian_by_alternatif($id_alternatif);
+        $penilaian_raw = $this->Penilaian_model->get_penilaian_by_alternatif($id_alternatif);
         
-        // Ubah data penilaian dari array menjadi format yang mudah dibaca di view
         $penilaian_map = [];
-        foreach($data_penilaian as $item) {
+        foreach($penilaian_raw as $item) {
             $penilaian_map[$item->id_kriteria] = $item->nilai;
         }
         
         $data = [
             'page' => "Penilaian",
+            'kriterias' => $this->Kriteria_model->tampil(),
             'edit_data' => $this->Alternatif_model->show($id_alternatif),
             'penilaian_map' => $penilaian_map,
-            'url_action' => base_url('Penilaian/update') // URL untuk menyimpan data EDIT
+            'url_action' => base_url('Penilaian/update')
         ];
         $this->load->view('penilaian/form_penilaian', $data);
     }
@@ -89,24 +98,36 @@ class Penilaian extends CI_Controller {
     private function proses_simpan()
     {
         $id_alternatif = $this->input->post('id_alternatif');
-        $absensi = ($this->input->post('absensi') == 0) ? 0.1 : $this->input->post('absensi');
-        $prestasi = $this->Prestasi_model->get_total_poin($id_alternatif);
-        $nilai_prestasi = ($prestasi == 0) ? 0.1 : $prestasi;
+        if(!$id_alternatif) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Silakan pilih alternatif terlebih dahulu!</div>');
+            redirect('Penilaian/tambah');
+        }
 
-        $data_penilaian = [
-            '1' => $this->input->post('nilai_raport'),
-            '2' => $this->input->post('nilai_ipc'),
-            '3' => $nilai_prestasi,
-            '4' => $absensi,
-            '5' => $this->input->post('ekstrakurikuler')
-        ];
+        $kriterias = $this->Kriteria_model->tampil();
+        
+        foreach ($kriterias as $kriteria) {
+            $nilai_input = $this->input->post($kriteria->kode_kriteria);
+            
+            $nilai_final = 0;
+            $id_kriteria_saat_ini = $kriteria->id_kriteria;
 
-        foreach ($data_penilaian as $id_kriteria => $nilai) {
-            $cek = $this->Penilaian_model->data_penilaian($id_alternatif, $id_kriteria);
-            if ($cek == 0) {
-                $this->Penilaian_model->tambah_penilaian($id_alternatif, $id_kriteria, $nilai);
+            // Logika khusus untuk kriteria tertentu (jika ada)
+            if ($kriteria->kode_kriteria == 'K3') { // Asumsi K3 adalah Prestasi
+                // Nilai prestasi diambil dari JavaScript, tidak dihitung ulang di sini
+                // Namun, kita tetap ambil dari POST untuk keamanan
+                $nilai_final = ($nilai_input == 0) ? 0.1 : $nilai_input;
+            } elseif ($kriteria->kode_kriteria == 'K4') { // Asumsi K4 adalah Absensi
+                $nilai_final = ($nilai_input == 0) ? 0.1 : $nilai_input;
             } else {
-                $this->Penilaian_model->edit_penilaian($id_alternatif, $id_kriteria, $nilai);
+                $nilai_final = $nilai_input;
+            }
+
+            // Simpan ke database dengan ID Kriteria yang benar
+            $cek = $this->Penilaian_model->data_penilaian($id_alternatif, $id_kriteria_saat_ini);
+            if ($cek == 0) {
+                $this->Penilaian_model->tambah_penilaian($id_alternatif, $id_kriteria_saat_ini, $nilai_final);
+            } else {
+                $this->Penilaian_model->edit_penilaian($id_alternatif, $id_kriteria_saat_ini, $nilai_final);
             }
         }
     }
