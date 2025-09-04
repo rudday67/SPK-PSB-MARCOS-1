@@ -23,7 +23,7 @@
                     <?php if (!empty($hasil)): ?>
                         <?php $no = 1; foreach ($hasil as $keys): ?>
                         <tr align="center">
-                            <td align="left"><?= $keys->nama ?></td>
+                            <td align="left"><?= $keys->nama_alternatif ?></td>
                             <td><?= round($keys->nilai, 4) ?></td>
                             <td class="font-weight-bold text-primary"><?= $no; ?></td>
                         </tr>
