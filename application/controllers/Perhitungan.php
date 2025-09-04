@@ -27,14 +27,6 @@ class Perhitungan extends CI_Controller {
             'hasil'=> $this->Perhitungan_model->get_hasil()
         ];
         
-        // --- LOKASI KODE DEBUGGING ---
-        // Tiga baris ini akan menghentikan program dan menampilkan
-        // isi data hasil perhitungan sebelum dikirim ke halaman.
-        echo "<pre>";
-        var_dump($data['hasil']);
-        die();
-        // --- BATAS KODE DEBUGGING ---
-        
         $this->load->view('perhitungan/hasil_admin', $data);
     }
 
