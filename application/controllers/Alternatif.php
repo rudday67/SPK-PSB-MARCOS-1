@@ -87,6 +87,7 @@
 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
             redirect('Alternatif');
         }
+        
     
     }
     
