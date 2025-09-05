@@ -131,4 +131,16 @@ class Penilaian extends CI_Controller {
             }
         }
     }
+    // (Letakkan fungsi ini di dalam class Penilaian, misalnya setelah fungsi update())
+
+    public function destroy($id_alternatif)
+    {
+        if ($this->session->userdata('id_user_level') != "1") {
+            redirect('Login');
+        }
+
+        $this->Penilaian_model->delete_by_alternatif($id_alternatif);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Seluruh data penilaian untuk siswa tersebut berhasil dihapus!</div>');
+        redirect('Penilaian');
+    }
 }

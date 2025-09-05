@@ -1,10 +1,10 @@
 <?php $this->load->view('layouts/header_admin'); ?>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-trophy"></i> Data Prestasi</h1>
+    <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-trophy text-primary mr-2"></i> Data Prestasi</h1>
     
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal">
-        <i class="fa fa-plus"></i> Tambah Data
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+        <i class="fa fa-plus mr-2"></i> Tambah Data
     </button>
 </div>
 
@@ -39,10 +39,9 @@
                         <td class="text-center"><?= $data->nilai_poin ?></td>
                         <td class="text-center">
                             
-                            <a href="<?= base_url('Prestasi/edit/' . $data->id_prestasi) ?>" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+                            <a data-toggle="tooltip" data-placement="bottom" title="Edit Data" href="<?= base_url('Prestasi/edit/' . $data->id_prestasi) ?>" class="btn btn-sm btn-circle btn-outline-primary mr-2"><i class="fas fa-pencil-alt"></i></a>
                             
-                            <a href="<?= base_url('Prestasi/destroy/' . $data->id_prestasi) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
-                                <i class="fa fa-trash"></i>
+                            <a data-toggle="tooltip" data-placement="bottom" title="Hapus Data" href="<?= base_url('Prestasi/destroy/' . $data->id_prestasi) ?>" class="btn btn-sm btn-circle btn-outline-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');"><i class="fas fa-trash"></i>
                             </a>
 
                         </td>

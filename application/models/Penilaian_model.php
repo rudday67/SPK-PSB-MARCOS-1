@@ -76,6 +76,14 @@
         return ($result) ? $result->nilai : 0; // Jika tidak ada nilai, kembalikan 0
     }
     
+    // (Letakkan fungsi ini di dalam class Penilaian_model)
+
+    public function delete_by_alternatif($id_alternatif)
+    {
+        $this->db->where('id_alternatif', $id_alternatif);
+        $this->db->delete('penilaian');
+    }
+
     }
     
     
