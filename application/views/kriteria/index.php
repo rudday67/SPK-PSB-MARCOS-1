@@ -7,7 +7,7 @@
         </h1>
         <p class="text-muted mt-2">Kelola data kriteria penilaian</p>
     </div>
-    <a href="<?= base_url('Kriteria/create'); ?>" class="btn btn-primary btn-sm">
+    <a href="<?= base_url('Kriteria/create'); ?>" class="btn btn-primary">
         <i class="fas fa-plus mr-2"></i>Tambah Data
     </a>
 </div>

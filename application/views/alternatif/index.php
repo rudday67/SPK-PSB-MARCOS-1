@@ -8,7 +8,7 @@
         <p class="text-muted mt-2">Kelola data alternatif penilaian</p>
     </div>
     <div>
-               <a href="<?= base_url('Alternatif/create'); ?>" class="btn btn-primary btn-sm">
+               <a href="<?= base_url('Alternatif/create'); ?>" class="btn btn-primary">
             <i class="fas fa-plus mr-2"></i> Tambah Data
         </a>
     </div>

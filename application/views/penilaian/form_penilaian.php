@@ -58,13 +58,18 @@
                                    class="form-control" 
                                    step="any" 
                                    <?= ($is_readonly) ? 'readonly style="background-color: #e9ecef;"' : 'required' ?> />
+                                    
+                            <?php if ($kriteria->kode_kriteria == 'K4'): // Asumsi K4 adalah Absensi ?>
+                                <small class="form-text text-muted">Berikan nilai 0 jika tidak pernah absen.</small>
+                            <?php endif; ?>
+
                         <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             </div>
         </div>
         <div class="card-footer text-right">
-            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
             <a href="<?= base_url('Penilaian'); ?>" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Kembali</a>
         </div>
     </form>
