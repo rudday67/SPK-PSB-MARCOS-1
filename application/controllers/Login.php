@@ -14,7 +14,7 @@ class Login extends CI_Controller {
     {
         if($this->Login_model->logged_id())
 		{
-			redirect('Login/home');
+			redirect('Dashboard');
 		}else{
 		    $this->load->view('login');
 		}

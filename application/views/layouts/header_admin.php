@@ -1,26 +1,27 @@
 <?php
-if($this->session->status !== ('Logged')) {
-    redirect('login');
+// Cek jika user belum login, lempar ke halaman login
+if (!$this->session->userdata('id_user')) {
+    redirect('Login');
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Dashboard | SPK MARCOS</title>
-  <link href="<?= base_url('assets/')?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="<?= base_url('assets/')?>css/sb-admin-2.min.css" rel="stylesheet">
-  <link href="<?= base_url('assets/css/sb-admin-2.css'); ?>" rel="stylesheet">
-  <link href="<?= base_url('assets/')?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-  <link rel="shortcut icon" href="<?= base_url('assets/')?>img/BM.png" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title><?= $page ?? 'Dashboard'; ?> | SPK MARCOS</title>
+    <link href="<?= base_url('assets/')?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="<?= base_url('assets/')?>css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?= base_url('assets/css/sb-admin-2.css'); ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/')?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="<?= base_url('assets/')?>img/BM.png" type="image/x-icon">
 </head>
 <body id="page-top">
 
-  <div id="wrapper">
-
+<div id="wrapper">
+    
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('Login/home'); ?>">
             <div class="sidebar-brand-icon">
@@ -34,52 +35,68 @@ if($this->session->status !== ('Logged')) {
                 <i class="fas fa-fw fa-home"></i>
                 <span>Dashboard</span></a>
         </li>
+
+
+        <?php $user_level = $this->session->userdata('id_user_level'); ?>
+
         <hr class="sidebar-divider">
-        <div class="sidebar-heading">Master Data</div>
-        <?php if($this->session->userdata('id_user_level') == '1'): ?>
-        <li class="nav-item <?php if($page=='Kriteria'){echo 'active';}?>">
-            <a class="nav-link" href="<?= base_url('Kriteria'); ?>">
-                <i class="fas fa-fw fa-cube"></i>
-                <span>Data Kriteria</span></a>
-        </li>
-        <li class="nav-item <?php if($page=='Prestasi'){echo 'active';}?>">
-            <a class="nav-link" href="<?= base_url('Prestasi'); ?>">
-                <i class="fas fa-fw fa-trophy"></i>
-                <span>Data Prestasi</span></a>
-        </li>
-        <li class="nav-item <?php if($page=='Alternatif'){echo 'active';}?>">
-            <a class="nav-link" href="<?= base_url('Alternatif'); ?>">
-                <i class="fas fa-fw fa-users"></i>
-                <span>Data Alternatif</span></a>
-        </li>
+        <div class="sidebar-heading">MASTER DATA</div>
+
+        <?php if (in_array($user_level, ['1', '3'])): ?>
+            <li class="nav-item <?= ($page == 'Kriteria') ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= base_url('Kriteria'); ?>">
+                    <i class="fas fa-fw fa-cube"></i>
+                    <span>Data Kriteria</span></a>
+            </li>
+        <?php endif; ?>
+
+        <?php if (in_array($user_level, ['1', '4'])): ?>
+            <li class="nav-item <?= ($page == 'Prestasi') ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= base_url('Prestasi'); ?>">
+                    <i class="fas fa-fw fa-trophy"></i>
+                    <span>Data Prestasi</span></a>
+            </li>
+            <li class="nav-item <?= ($page == 'Alternatif') ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= base_url('Alternatif'); ?>">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Data Alternatif</span></a>
+            </li>
+        <?php endif; ?>
+
         <hr class="sidebar-divider">
-        <div class="sidebar-heading">Proses Penilaian</div>
-        <li class="nav-item <?php if($page=='Penilaian'){echo 'active';}?>">
-            <a class="nav-link" href="<?= base_url('Penilaian/tambah'); ?>">
-                <i class="fas fa-fw fa-edit"></i>
-                <span>Input Penilaian</span></a>
-        </li>
+        <div class="sidebar-heading">PROSES PENILAIAN</div>
         
-        <li class="nav-item <?php if($page=='Hasil'){echo 'active';}?>">
+        <?php if (in_array($user_level, ['1', '4'])): ?>
+            <li class="nav-item <?= ($page == 'Penilaian') ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= base_url('Penilaian'); ?>">
+                    <i class="fas fa-fw fa-edit"></i>
+                    <span>Input Penilaian</span></a>
+            </li>
+        <?php endif; ?>
+
+        <li class="nav-item <?= ($page == 'Hasil') ? 'active' : '' ?>">
             <a class="nav-link" href="<?= base_url('Perhitungan/hasil'); ?>">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Data Hasil Akhir</span></a>
         </li>
+        
+        <?php if ($user_level == '1'): ?>
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">MASTER USER</div>
+            <li class="nav-item <?= ($page == 'User') ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= base_url('User'); ?>">
+                    <i class="fas fa-fw fa-users-cog"></i>
+                    <span>Data User</span></a>
+            </li>
         <?php endif; ?>
+
         <hr class="sidebar-divider">
-        <div class="sidebar-heading">Master User</div>
-        <?php if($this->session->userdata('id_user_level') == '1'): ?>
-        <li class="nav-item <?php if($page=='User'){echo 'active';}?>">
-            <a class="nav-link" href="<?= base_url('User'); ?>">
-                <i class="fas fa-fw fa-users-cog"></i>
-                <span>Data User</span></a>
-        </li>
-        <?php endif; ?>
-        <li class="nav-item <?php if($page=='Profile'){echo 'active';}?>">
+        <li class="nav-item <?= ($page == 'Profile') ? 'active' : '' ?>">
             <a class="nav-link" href="<?= base_url('Profile'); ?>">
                 <i class="fas fa-fw fa-user"></i>
                 <span>Data Profile</span></a>
         </li>
+        
         <hr class="sidebar-divider d-none d-md-block">
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>

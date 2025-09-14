@@ -4,15 +4,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Prestasi extends CI_Controller {
 
     public function __construct()
-    {
-        parent::__construct();
-        // Cek sesi login
-        if ($this->session->userdata('id_user_level') != "1") {
-            redirect('Login');
-        }
-        $this->load->model('Prestasi_model');
-        $this->load->model('Alternatif_model');
+{
+    parent::__construct();
+    if (!in_array($this->session->userdata('id_user_level'), ['1', '4'])) {
+        redirect('Login');
     }
+    $this->load->model('Prestasi_model');
+    $this->load->model('Alternatif_model');
+}
 
     /**
      * Menampilkan halaman utama CRUD Prestasi (Daftar Prestasi).
