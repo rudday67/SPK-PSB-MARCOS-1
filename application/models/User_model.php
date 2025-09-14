@@ -52,7 +52,11 @@
         {
             $query = $this->db->get('user_level');
             return $query->result();
-        }             
+        }   
+        public function getTotal()
+    {
+        return $this->db->count_all('user');
+    }          
     }
     
     /* End of file Kategori_model.php */

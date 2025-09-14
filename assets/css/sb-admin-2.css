@@ -11239,6 +11239,7 @@ body.sidebar-toggled footer.sticky-footer {
     transform: translateY(-5px);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.10) !important;
     border-color: transparent;
+    text-decoration: none;
 }
 .bg-primary-soft { background-color: rgba(78, 115, 223, 0.05); }
 .bg-success-soft { background-color: rgba(28, 200, 138, 0.05); }

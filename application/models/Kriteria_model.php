@@ -41,5 +41,9 @@
             $this->db->where('id_kriteria', $id_kriteria);
             $this->db->delete('kriteria');
         }
+        public function getTotal()
+    {
+        return $this->db->count_all('kriteria');
+    }
     }
     

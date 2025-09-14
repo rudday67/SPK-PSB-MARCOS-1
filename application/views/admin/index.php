@@ -75,33 +75,6 @@
     </div>
 </div>
 
-<style>
-/* CSS ini bisa Anda pindah ke file CSS terpisah jika mau */
-.menu-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    border-radius: 0.75rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    height: 100%;
-    border: 1px solid #e3e6f0;
-    background-color: #fff;
-}
-.menu-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.10) !important;
-    border-color: transparent;
-    text-decoration: none;
-}
-.bg-primary-soft { background-color: rgba(78, 115, 223, 0.05); }
-.bg-success-soft { background-color: rgba(28, 200, 138, 0.05); }
-.bg-info-soft { background-color: rgba(54, 185, 204, 0.05); }
-.bg-warning-soft { background-color: rgba(246, 194, 62, 0.05); }
-.bg-danger-soft { background-color: rgba(231, 74, 59, 0.05); }
-.bg-secondary-soft { background-color: rgba(134, 142, 150, 0.05); }
-</style>
+
 
 <?php $this->load->view('layouts/footer_admin'); ?>
