@@ -5,21 +5,13 @@
     class Kriteria extends CI_Controller {
     
         public function __construct()
-        {
-            parent::__construct();
-            $this->load->library('pagination');
-            $this->load->library('form_validation');
-            $this->load->model('Kriteria_model');
-
-            if ($this->session->userdata('id_user_level') != "1") {
-            ?>
-				<script type="text/javascript">
-                    alert('Anda tidak berhak mengakses halaman ini!');
-                    window.location='<?php echo base_url("Login/home"); ?>'
-                </script>
-            <?php
-			}
-        }
+{
+    parent::__construct();
+    if (!in_array($this->session->userdata('id_user_level'), ['1', '3'])) {
+        redirect('Login');
+    }
+    $this->load->model('Kriteria_model');
+}
 
         public function index()
         {
