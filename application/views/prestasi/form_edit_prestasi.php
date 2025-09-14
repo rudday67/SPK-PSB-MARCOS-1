@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="card-footer text-right">
-            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Update</button>
             <a href="<?= base_url('Prestasi'); ?>" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Kembali</a>
         </div>
     </form>
