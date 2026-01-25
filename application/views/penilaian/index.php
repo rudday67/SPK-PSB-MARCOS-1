@@ -18,7 +18,7 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead class="bg-light">
                     <tr align="center">
-                        <th width="5%">No</th>
+                        <th width="5%">No</th> 
                         <th>Alternatif</th>
                         <th width="15%">Aksi</th>
                     </tr>

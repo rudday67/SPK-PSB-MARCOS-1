@@ -153,7 +153,7 @@ public function get_hasil()
     }
     
     // --- FINAL: Mengambil data hasil yang sudah diurutkan untuk ditampilkan ---
-    $this->db->select('alternatif.nama, hasil.nilai');
+    $this->db->select('alternatif.id_alternatif, alternatif.nama, alternatif.status_verifikasi, hasil.nilai');('alternatif.id_alternatif, alternatif.nama, alternatif.status_verifikasi, hasil.nilai');
     $this->db->from('hasil');
     $this->db->join('alternatif', 'hasil.id_alternatif = alternatif.id_alternatif');
     $this->db->order_by('hasil.nilai', 'DESC');
