@@ -49,4 +49,20 @@ class Alternatif_model extends CI_Model {
         $this->db->where("id_alternatif NOT IN (SELECT id_alternatif FROM penilaian GROUP BY id_alternatif)", NULL, FALSE);
         return $this->db->get()->result();
     }
+//verifikasi
+    public function update_verifikasi($id_alternatif, $status)
+{
+    $this->db->where('id_alternatif', $id_alternatif);
+    return $this->db->update('alternatif', ['status_verifikasi' => $status]);
+}
+    public function verifikasi_semua()
+{
+    // Mengubah semua data alternatif menjadi status_verifikasi = 1
+    return $this->db->update('alternatif', ['status_verifikasi' => 1]);
+}
+public function batal_verifikasi_semua()
+{
+    // Mengubah semua data alternatif menjadi status_verifikasi = 0
+    return $this->db->update('alternatif', ['status_verifikasi' => 0]);
+}
 }
