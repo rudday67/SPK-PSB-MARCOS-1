@@ -59,7 +59,7 @@ if (!$this->session->userdata('id_user')) {
             <li class="nav-item <?= ($page == 'Alternatif') ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= base_url('Alternatif'); ?>">
                     <i class="fas fa-fw fa-users"></i>
-                    <span>Data Alternatif</span></a>
+                    <span>Data Siswa</span></a>
             </li>
         <?php endif; ?>
 
@@ -86,7 +86,7 @@ if (!$this->session->userdata('id_user')) {
             <li class="nav-item <?= ($page == 'User') ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= base_url('User'); ?>">
                     <i class="fas fa-fw fa-users-cog"></i>
-                    <span>Data User</span></a>
+                    <span>Data Pengguna</span></a>
             </li>
         <?php endif; ?>
 
@@ -94,7 +94,7 @@ if (!$this->session->userdata('id_user')) {
         <li class="nav-item <?= ($page == 'Profile') ? 'active' : '' ?>">
             <a class="nav-link" href="<?= base_url('Profile'); ?>">
                 <i class="fas fa-fw fa-user"></i>
-                <span>Data Profile</span></a>
+                <span>Data Profil</span></a>
         </li>
         
         <hr class="sidebar-divider d-none d-md-block">

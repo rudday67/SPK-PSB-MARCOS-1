@@ -39,8 +39,8 @@
             <table class="table table-bordered" id="tabelPeringkat" width="100%" cellspacing="0">
                 <thead class="bg-light">
                     <tr align="center">
-                        <th>Nama Alternatif</th>
-                        <th>Nilai Ki</th>
+                        <th>Nama Siswa
+                        <th>Nilai</th>
                         <th width="15%">Rank</th>
                         <th>Verifikasi</th> 
                     </tr>

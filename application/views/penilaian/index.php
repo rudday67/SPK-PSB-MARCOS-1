@@ -10,7 +10,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-table mr-2"></i> Daftar Alternatif Telah Dinilai</h6>
+        <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-table mr-2"></i> Daftar Siswa Telah Dinilai</h6>
     </div>
 
     <div class="card-body">
@@ -19,7 +19,7 @@
                 <thead class="bg-light">
                     <tr align="center">
                         <th width="5%">No</th> 
-                        <th>Alternatif</th>
+                        <th>Siswa
                         <th width="15%">Aksi</th>
                     </tr>
                 </thead>

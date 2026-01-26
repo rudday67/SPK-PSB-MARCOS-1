@@ -159,4 +159,18 @@ public function get_hasil()
     $this->db->order_by('hasil.nilai', 'DESC');
     return $this->db->get()->result();
 }
+
+// 2. FUNGSI UNTUK LAPORAN (Hanya menampilkan yang sudah diverifikasi)
+public function get_hasil_laporan()
+{
+    $this->db->select('alternatif.id_alternatif, alternatif.nama, alternatif.status_verifikasi, hasil.nilai');
+    $this->db->from('hasil');
+    $this->db->join('alternatif', 'hasil.id_alternatif = alternatif.id_alternatif');
+    
+    // Syarat sakti: Hanya status 1 yang ditarik untuk laporan
+    $this->db->where('alternatif.status_verifikasi', 1); 
+    
+    $this->db->order_by('hasil.nilai', 'DESC');
+    return $this->db->get()->result();
+}
 }

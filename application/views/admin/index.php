@@ -42,7 +42,7 @@
             <div class="col-lg-4 col-md-6 mb-4">
                 <a href="<?= base_url('Alternatif'); ?>" class="menu-card bg-info-soft">
                     <i class="fas fa-users fa-3x text-info mb-3"></i>
-                    <h5 class="text-dark fw-bold">Data Alternatif</h5>
+                    <h5 class="text-dark fw-bold">Data Siswa</h5>
                     <p class="small text-muted mb-0">Kelola data siswa</p>
                 </a>
             </div>
@@ -67,8 +67,8 @@
             <div class="col-lg-4 col-md-6 mb-4">
                 <a href="<?= base_url('User'); ?>" class="menu-card bg-secondary-soft">
                     <i class="fas fa-users-cog fa-3x text-secondary mb-3"></i>
-                    <h5 class="text-dark fw-bold">Data User</h5>
-                    <p class="small text-muted mb-0">Kelola data user</p>
+                    <h5 class="text-dark fw-bold">Data Pengguna</h5>
+                    <p class="small text-muted mb-0">Kelola data pengguna</p>
                 </a>
             </div>
         <?php endif; ?>

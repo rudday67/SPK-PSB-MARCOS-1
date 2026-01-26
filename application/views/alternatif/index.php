@@ -3,9 +3,9 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h1 class="h3 mb-0 text-gray-800">
-            <i class="fas fa-users text-primary mr-2"></i>Data Alternatif
+            <i class="fas fa-users text-primary mr-2"></i>Data Siswa
         </h1>
-        <p class="text-muted mt-2">Kelola data alternatif penilaian</p>
+        <p class="text-muted mt-2">Kelola data siswa penilaian</p>
     </div>
     <div>
                <a href="<?= base_url('Alternatif/create'); ?>" class="btn btn-primary">
@@ -19,7 +19,7 @@
 <div class="card shadow mb-4">
     <div class="card-header bg-white py-3 border-bottom">
         <h6 class="m-0 font-weight-bold text-primary">
-            <i class="fas fa-table mr-2"></i>Daftar Data Alternatif
+            <i class="fas fa-table mr-2"></i>Daftar Data Siswa
         </h6>
     </div>
     <div class="card-body">
@@ -28,7 +28,7 @@
                 <thead class="bg-light">
                     <tr align="center">
                         <th width="5%" class="py-3">No</th>
-                        <th class="py-3">Nama Alternatif</th>
+                        <th class="py-3">Nama Siswa</th>
                         <th width="15%" class="text-center py-3">Aksi</th>
                     </tr>
                 </thead>
