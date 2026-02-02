@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Sistem Pendukung Keputusan Metode MARCOS</title>
+    <title>Sistem Pendukung Keputusan Metode MARCOS</title>
 </head>
 <style>
     table {
@@ -9,34 +9,46 @@
     }
     table, th, td {
         border: 1px solid black;
+        padding: 8px; /* Tambahan agar lebih rapi saat dicetak */
+    }
+    h4 {
+        text-align: center;
+        text-transform: uppercase;
     }
 </style>
 <body>
-<h4>Hasil Akhir Perankingan</h4>
+
+<h4>Laporan Hasil Akhir Perankingan</h4>
+
 <table border="1" width="100%">
-	<thead>
-		<tr align="center">
-			<th>Nama Alternatif</th>
-			<th>Nilai Ki</th>
-			<th width="15%">Rank</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php
-			$no=1;
-			foreach ($hasil as $keys): ?>
-		<tr align="center">
-			<td align="left"><?= $keys->nama ?></td>
-			<td><?= $keys->nilai ?></td>
-			<td><?= $no; ?></td>
-		</tr>
-		<?php
-			$no++;
-			endforeach ?>
-	</tbody>
+    <thead>
+        <tr align="center">
+            <th width="5%">No</th>
+            <th>Nama Alternatif</th>
+            <th>Nilai Ki</th>
+            <th width="15%">Rank SPK</th> <th width="15%">Rank Akhir</th> </tr>
+    </thead>
+    <tbody>
+        <?php
+            $no = 1;
+            foreach ($hasil as $keys): ?>
+        <tr align="center">
+            <td><?= $no; ?></td>
+            <td align="left"><?= $keys->nama ?></td>
+            <td><?= round($keys->nilai, 4) ?></td> <td><?= $no; ?></td> 
+            
+            <td style="font-weight: bold;">
+                <?= (!empty($keys->rank_pimpinan)) ? $keys->rank_pimpinan : $no; ?>
+            </td>
+        </tr>
+        <?php
+            $no++;
+            endforeach ?>
+    </tbody>
 </table>
+
 <script>
-	window.print();
+    window.print();
 </script>
 </body>
 </html>

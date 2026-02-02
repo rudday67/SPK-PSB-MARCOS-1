@@ -114,4 +114,28 @@ public function batal_verifikasi_semua()
     $this->session->set_flashdata('message', '<div class="alert alert-danger">Seluruh verifikasi telah dibatalkan!</div>');
     redirect('Perhitungan/hasil');
 }
+
+public function update_rank_pimpinan()
+{
+    // Hanya pimpinan yang bisa melakukan ini
+    if ($this->session->userdata('id_user_level') != '3') {
+        redirect('Login');
+    }
+
+    $id_alternatif = $this->input->post('id_alternatif');
+    $rank_baru = $this->input->post('rank_pimpinan');
+
+    $this->db->where('id_alternatif', $id_alternatif);
+    $this->db->update('alternatif', ['rank_pimpinan' => $rank_baru]);
+
+    $this->session->set_flashdata('message', '<div class="alert alert-success">Ranking berhasil disesuaikan pimpinan!</div>');
+    redirect('Perhitungan/hasil');
+}
+
+public function reset_ranking()
+{
+    $this->db->update('alternatif', ['rank_pimpinan' => NULL]);
+    $this->session->set_flashdata('message', '<div class="alert alert-warning">Ranking dikembalikan ke hitungan otomatis SPK!</div>');
+    redirect('Perhitungan/hasil');
+}
 }

@@ -152,25 +152,30 @@ public function get_hasil()
         $this->db->insert('hasil', ['id_alternatif' => $id_alt, 'nilai' => $ki]);
     }
     
-    // --- FINAL: Mengambil data hasil yang sudah diurutkan untuk ditampilkan ---
-    $this->db->select('alternatif.id_alternatif, alternatif.nama, alternatif.status_verifikasi, hasil.nilai');('alternatif.id_alternatif, alternatif.nama, alternatif.status_verifikasi, hasil.nilai');
-    $this->db->from('hasil');
-    $this->db->join('alternatif', 'hasil.id_alternatif = alternatif.id_alternatif');
-    $this->db->order_by('hasil.nilai', 'DESC');
-    return $this->db->get()->result();
-}
+    $this->db->select('alternatif.id_alternatif, alternatif.nama, alternatif.status_verifikasi, alternatif.rank_pimpinan, hasil.nilai');
+        $this->db->from('hasil');
+        $this->db->join('alternatif', 'hasil.id_alternatif = alternatif.id_alternatif');
+        $this->db->order_by('CASE WHEN alternatif.rank_pimpinan IS NULL THEN 1 ELSE 0 END', 'ASC', FALSE);
+        $this->db->order_by('alternatif.rank_pimpinan', 'ASC');
+        $this->db->order_by('hasil.nilai', 'DESC');
+        return $this->db->get()->result();
+    }
 
-// 2. FUNGSI UNTUK LAPORAN (Hanya menampilkan yang sudah diverifikasi)
-public function get_hasil_laporan()
-{
-    $this->db->select('alternatif.id_alternatif, alternatif.nama, alternatif.status_verifikasi, hasil.nilai');
-    $this->db->from('hasil');
-    $this->db->join('alternatif', 'hasil.id_alternatif = alternatif.id_alternatif');
-    
-    // Syarat sakti: Hanya status 1 yang ditarik untuk laporan
-    $this->db->where('alternatif.status_verifikasi', 1); 
-    
-    $this->db->order_by('hasil.nilai', 'DESC');
-    return $this->db->get()->result();
-}
+    // TAMBAHKAN DI SINI (Di bawah fungsi get_hasil)
+    public function get_hasil_laporan()
+    {
+        $this->db->select('alternatif.id_alternatif, alternatif.nama, alternatif.status_verifikasi, alternatif.rank_pimpinan, hasil.nilai');
+        $this->db->from('hasil');
+        $this->db->join('alternatif', 'hasil.id_alternatif = alternatif.id_alternatif');
+        
+        // Filter: Hanya yang sudah di-ACC (verifikasi) pimpinan
+        $this->db->where('alternatif.status_verifikasi', 1); 
+        
+        // Urutan: Mengikuti keputusan pimpinan (Rank Akhir)
+        $this->db->order_by('CASE WHEN alternatif.rank_pimpinan IS NULL THEN 1 ELSE 0 END', 'ASC', FALSE);
+        $this->db->order_by('alternatif.rank_pimpinan', 'ASC');
+        $this->db->order_by('hasil.nilai', 'DESC');
+        
+        return $this->db->get()->result();
+    }
 }

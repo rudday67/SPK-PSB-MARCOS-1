@@ -7,6 +7,13 @@
     
     <div class="d-flex align-items-center">
         <?php if ($this->session->userdata('id_user_level') == '3'): ?>
+            
+            <a href="<?= base_url('Perhitungan/reset_ranking'); ?>" 
+               class="btn btn-sm btn-warning shadow-sm mr-2" 
+               onclick="return confirm('Kembalikan urutan sesuai hitungan otomatis SPK?')">
+                <i class="fas fa-sync fa-sm text-white-50 mr-1"></i> Reset Urutan
+            </a>
+
             <?php if ($belum_verif > 0): ?>
                 <a href="<?= base_url('Perhitungan/verifikasi_semua'); ?>" 
                    class="btn btn-sm btn-success shadow-sm mr-2" 
@@ -20,6 +27,7 @@
                     <i class="fas fa-undo fa-sm text-white-50 mr-1"></i> Batal Semua
                 </a>
             <?php endif; ?>
+
         <?php endif; ?>
 
         <a href="<?= base_url('Laporan'); ?>" class="btn btn-sm btn-primary shadow-sm">
@@ -37,12 +45,11 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="tabelPeringkat" width="100%" cellspacing="0">
-                <thead class="bg-light">
-                    <tr align="center">
-                        <th>Nama Siswa
+                <thead class="bg-light text-center">
+                    <tr>
+                        <th>Nama Siswa</th>
                         <th>Nilai</th>
-                        <th width="15%">Rank</th>
-                        <th>Verifikasi</th> 
+                        <th width="10%">Rank SPK</th> <th width="15%">Rank Akhir (Pimpinan)</th> <th>Verifikasi</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +58,24 @@
                         <tr align="center">
                             <td align="left"><?= $keys->nama ?></td>
                             <td><?= round($keys->nilai, 4) ?></td>
-                            <td class="font-weight-bold text-primary"><?= $no; ?></td>
+                            
+                            <td class="font-weight-bold text-secondary"><?= $no; ?></td>
+
+                                <td class="font-weight-bold text-primary">
+                                    <?php if ($this->session->userdata('id_user_level') == '3'): ?>
+                                        <form action="<?= base_url('Perhitungan/update_rank_pimpinan') ?>" method="post" class="d-flex align-items-center justify-content-center">
+                                            <input type="hidden" name="id_alternatif" value="<?= $keys->id_alternatif ?>">
+                                            <input type="number" name="rank_pimpinan" 
+                                                class="form-control form-control-sm text-center" 
+                                                style="width: 60px;" 
+                                                value="<?= (!empty($keys->rank_pimpinan)) ? $keys->rank_pimpinan : $no; ?>">
+                                            <button type="submit" class="btn btn-sm btn-primary ml-1"><i class="fa fa-save"></i></button>
+                                        </form>
+                                    <?php else: ?>
+                                        <?= (!empty($keys->rank_pimpinan)) ? $keys->rank_pimpinan : $no; ?>
+                                    <?php endif; ?>
+                                </td>
+
                             <td style="vertical-align: middle;">
                                 <?php if ($keys->status_verifikasi == 1): ?>
                                     <div class="badge badge-success px-3 py-2 shadow-sm" style="font-size: 0.85rem;">
@@ -85,7 +109,7 @@
                         <?php $no++; endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="4" class="text-center">Tidak ada data untuk dihitung.</td>
+                            <td colspan="5" class="text-center">Tidak ada data untuk dihitung.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -98,9 +122,10 @@
 
 <script>
 $(document).ready(function() {
-    // Pastikan ID di sini SAMA dengan ID di tag <table> (tabelPeringkat)
     $('#tabelPeringkat').DataTable({
-        "order": [[ 2, "asc" ]] 
+        "ordering": false, // Agar urutan tetap mengikuti CASE WHEN di Model
+        "destroy": true,
+        "pageLength": 25
     });
 });
 </script>
